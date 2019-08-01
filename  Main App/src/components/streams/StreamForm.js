@@ -1,0 +1,68 @@
+import React, { Component } from "react";
+import { Field, reduxForm } from "redux-form";
+
+class StreamForm extends Component {
+  //Render errors below input
+  renderError = ({ error, touched }) => {
+    if (touched && error) {
+      return (
+        <div className="ui error message">
+          <div className="header">{error}</div>
+        </div>
+      );
+    }
+  };
+  // Render Input form
+  renderInput = ({ input, label, meta }) => {
+    const className = `field ${meta.error && meta.touched ? "error" : ""}`;
+    return (
+      <div className={className}>
+        <label>{label}</label>
+        <input type="text" {...input} autoComplete="off" />
+        {this.renderError(meta)}
+      </div>
+    );
+  };
+
+  onSubmit = formValues => {
+    this.props.onSubmit(formValues);
+  };
+
+  render() {
+    return (
+      <form
+        className="ui form error"
+        onSubmit={this.props.handleSubmit(this.onSubmit)}
+      >
+        <Field name="title" component={this.renderInput} label="Enter Title" />
+        <Field
+          name="description"
+          component={this.renderInput}
+          label="Enter Description"
+        />
+        <button className="ui button primary">Submit</button>
+      </form>
+    );
+  }
+}
+// Check errors
+const validate = formValues => {
+  var errors = {};
+
+  if (!formValues.title) {
+    errors.title = "Please enter the stream title";
+  }
+
+  if (!formValues.description) {
+    errors.description = "Please enter the stream description";
+  }
+
+  return errors;
+};
+
+const formWrapped = reduxForm({
+  form: "streamForm",
+  validate: validate
+})(StreamForm);
+
+export default formWrapped;
