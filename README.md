@@ -1,5 +1,5 @@
 # Streamer
-An app that is used to live stream a video. The app uses google OAuth2 for authentication, React for front end and Redux for state management.
+An app that is used to live stream a video. The app uses Google OAuth2 for authentication, React JS for front end and Redux Thunk for state management.
 
 # Technologies Used
 1) React JS for front end.
